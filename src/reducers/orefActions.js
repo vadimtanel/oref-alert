@@ -1,6 +1,8 @@
+import * as actionTypes from './orefActionTypes';
+
 export const addTodo = (text) => {
     return {
-        type: ADD_TODO,
+        type: actionTypes.ADD_TODO,
         text
     }
 }
