@@ -7,8 +7,6 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 export default function Info() {
   const classes = useStyles();
 
-  const [count, setCount] = useState(0);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.page}>
@@ -24,7 +22,7 @@ export default function Info() {
         </Typography>
         <Typography>
           <GitHubIcon/>
-          <a className={classes.avatarRoot} href="" target="_blank" rel="noopener noreferrer">
+          <a className={classes.avatarRoot} href="https://www.github.com/vadimtanel" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </Typography>
