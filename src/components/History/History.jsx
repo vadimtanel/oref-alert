@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import React, { useState } from "react";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-  
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 
 function History() {
-  const [fromDate, setFromDate] = React.useState(new Date('2014-08-18T21:11:54'));
-  const [toDate, setToDate] = React.useState(new Date('2014-08-18T21:11:54'));
-  
+  const [fromDate, setFromDate] = React.useState(
+    new Date("2014-08-18T21:11:54")
+  );
+  const [toDate, setToDate] = React.useState(new Date("2014-08-18T21:11:54"));
+
   const handleFromDateChange = date => {
     setFromDate(date);
   };
-  
+
   const handleToDateChange = date => {
     setToDate(date);
   };
-  
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
@@ -33,7 +34,7 @@ function History() {
           value={fromDate}
           onChange={handleFromDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            "aria-label": "change date"
           }}
         />
         <KeyboardDatePicker
@@ -44,7 +45,7 @@ function History() {
           value={toDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            "aria-label": "change date"
           }}
         />
         <KeyboardTimePicker
@@ -54,7 +55,7 @@ function History() {
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change time',
+            "aria-label": "change time"
           }}
         />
       </Grid>

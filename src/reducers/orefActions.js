@@ -1,8 +1,8 @@
-import * as actionTypes from './orefActionTypes';
+import * as actionTypes from "./orefActionTypes";
 
-export const addTodo = (text) => {
-    return {
-        type: actionTypes.ADD_TODO,
-        text
-    }
-}
+export const setViewName = viewName => {
+  return {
+    type: actionTypes.SET_VIEW_NAME,
+    viewName
+  };
+};
