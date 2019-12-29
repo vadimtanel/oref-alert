@@ -32,6 +32,8 @@ function App() {
       case "About":
         viewPanel = <Info />;
         break;
+      default:
+        break;
     }
     return viewPanel;
   };
