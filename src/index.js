@@ -8,8 +8,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const middleware = applyMiddleware(thunk);
-let store = createStore(orefReducer, middleware);
+const middleware = applyMiddleware(thunk); // lets us dispatch() functions
+let store = createStore(orefReducer, middleware); 
 
 ReactDOM.render(
     <Provider store={store}>
