@@ -7,7 +7,7 @@ const classes = require("./style.scss");
 export default function CustomMap() {
   const [lat, setLat] = useState(51.505);
   const [lng, setLng] = useState(-0.09);
-  const [zoom, setLZoom] = useState(13);
+  const [zoom, setZoom] = useState(13);
 
   const pointerIcon = new L.Icon({
     iconUrl: "./../../asserts/mapPointer.png",

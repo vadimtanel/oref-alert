@@ -7,7 +7,7 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 
-function History() {
+export default function History() {
   const [fromDate, setFromDate] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
@@ -17,7 +17,7 @@ function History() {
     setFromDate(date);
   };
 
-  const handleToDateChange = date => {
+  const handleDateChange = date => {
     setToDate(date);
   };
 
@@ -52,7 +52,7 @@ function History() {
           margin="normal"
           id="time-picker"
           label="Time picker"
-          value={selectedDate}
+          value={25}
           onChange={handleDateChange}
           KeyboardButtonProps={{
             "aria-label": "change time"

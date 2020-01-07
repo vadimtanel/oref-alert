@@ -1,6 +1,13 @@
 # oref-alarm
+
 Missile alarm app written with react-redux
 
+## This app using:
+
+    > React Hooks
+    > material-ui.com
+    > leafletjs.com
+    > react-leaflet.js.org
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

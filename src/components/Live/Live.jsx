@@ -2,22 +2,43 @@ import React, { useState, useEffect } from "react";
 import { useStyles } from "./style";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Grid from '@material-ui/core/Grid';
 import GitHubIcon from "@material-ui/icons/GitHub";
 import CustomMap from "./../Map";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AlertList from './../AlertList';
 
 export default function Live() {
-  const [count, setCount] = useState(0);
+  const [data, setData] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
-    //https://www.oref.org.il/WarningMessages/History/AlertsHistory.json
-    /*
-    [{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"אשקלון"},{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"באר גנים"},{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"ברכיה"},{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"הודיה"},{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"ניצנים"},{"alertDate":"2019-12-25 21:02:10","title":"התרעות פיקוד העורף","data":"ניר ישראל"},{"alertDate":"2019-12-25 21:02:00","title":"התרעות פיקוד העורף","data":"אמונים"},{"alertDate":"2019-12-25 21:02:00","title":"התרעות פיקוד העורף","data":"עזריקם"},{"alertDate":"2019-12-25 21:02:00","title":"התרעות פיקוד העורף","data":"שדה עוזיהו"}]
-    */
-    //First log from 24.07.14
-    let pathl = "https://www.oref.org.il//Shared/Ajax/GetAlarms.aspx?fromDate=01.12.2019%2012:04:04";
-    fetch("")
+    getData("http://localhost:9090/history/");
   });
+
+  const getData = async (path) => {
+    fetch(path, { headers: { 'Content-Type': 'application/json' } })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log(response);
+        return response.json();
+      })
+      .then((jsonData) => {
+        console.log("Json recieved data: " + jsonData);
+        setData(jsonData)
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
+  }
+
+  const handleListItemClick = (event, index) => {
+    console.log(index);
+  };
 
   return (
     <div className={classes.root}>
@@ -28,6 +49,21 @@ export default function Live() {
         <Typography variant="subtitle1">
           Display alerts for the last 5 minuts
         </Typography>
+
+        <Paper>
+          <Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <AlertList />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CustomMap />
+              </Grid>
+            </Grid>
+          </Typography>
+        </Paper>
+
+
         <Typography>
           <br />
           Written by &nbsp;
@@ -51,9 +87,6 @@ export default function Live() {
           </a>
         </Typography>
       </Paper>
-      <div>
-        <CustomMap/>
-      </div>
     </div>
   );
 }

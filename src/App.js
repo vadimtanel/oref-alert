@@ -8,6 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "./components/Navigation";
 import SideBar from "./components/SideBar";
 import Info from "./components/Info";
+import History from "./components/History";
 import Live from "./components/Live";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
     switch (viewName) {
       case "Live":
         viewPanel = <Live />;
+        break;
+      case "History":
+        viewPanel = <History />;
         break;
       case "About":
         viewPanel = <Info />;
