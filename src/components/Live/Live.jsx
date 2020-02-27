@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux'
 import { useStyles } from "./style";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -9,14 +10,24 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import AlertList from './../AlertList';
+import { setDataAlerts, setSelectedAlert } from './../../reducers/orefActions';
 
 export default function Live() {
+  const dispatch = useDispatch()
   const [data, setData] = useState(0);
+  const [count, setCount] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
-    getData("http://localhost:9090/history/");
-  });
+    dispatch(setSelectedAlert({}));
+    dispatch(setDataAlerts([]));
+    getData("http://localhost:9090/api/live");
+    // getData("http://localhost:9090/api/history?fromDate=20.09.2018");
+
+    return () => {
+      dispatch(setDataAlerts([]));
+    };
+  }, []);
 
   const getData = async (path) => {
     fetch(path, { headers: { 'Content-Type': 'application/json' } })
@@ -28,8 +39,9 @@ export default function Live() {
         return response.json();
       })
       .then((jsonData) => {
-        console.log("Json recieved data: " + jsonData);
-        setData(jsonData)
+        dispatch(setDataAlerts(jsonData));
+        setData(jsonData);
+        setCount(jsonData.length);
       })
       .catch((error) => {
         console.error('There has been a problem with your fetch operation:', error);
@@ -47,13 +59,16 @@ export default function Live() {
           Live Alert
         </Typography>
         <Typography variant="subtitle1">
-          Display alerts for the last 5 minuts
+          Display alerts for the last 24 hourse
         </Typography>
 
         <Paper>
-          <Typography>
+          <Typography component={'span'}>
+            Found total {count} alerts
+          </Typography>
+          <Typography component={'span'}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <AlertList />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -64,7 +79,7 @@ export default function Live() {
         </Paper>
 
 
-        <Typography>
+        <Typography component={'span'}>
           <br />
           Written by &nbsp;
           <a
@@ -75,7 +90,7 @@ export default function Live() {
             Vadim Tanel
           </a>
         </Typography>
-        <Typography>
+        <Typography component={'span'}>
           <GitHubIcon />
           <a
             className={classes.avatarRoot}

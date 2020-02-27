@@ -5,7 +5,6 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import HistoryIcon from "@material-ui/icons/History";
-import MapIcon from "@material-ui/icons/Map";
 import InfoIcon from "@material-ui/icons/Info";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -44,8 +43,8 @@ export default function SideBar(props) {
           {theme.direction === "ltr" ? (
             <ChevronLeftIcon />
           ) : (
-            <ChevronRightIcon />
-          )}
+              <ChevronRightIcon />
+            )}
         </IconButton>
       </div>
       <Divider />
@@ -72,17 +71,6 @@ export default function SideBar(props) {
             <HistoryIcon />
           </ListItemIcon>
           <ListItemText primary="History" />
-        </ListItem>
-        <ListItem
-          button
-          key="Map"
-          selected={viewName === "Map"}
-          onClick={() => setViewName("Map")}
-        >
-          <ListItemIcon>
-            <MapIcon />
-          </ListItemIcon>
-          <ListItemText primary="Map" />
         </ListItem>
         <Divider />
         <ListItem

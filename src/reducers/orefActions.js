@@ -6,3 +6,17 @@ export const setViewName = viewName => {
     viewName
   };
 };
+
+export const setDataAlerts = dataAlerts => {
+  return {
+    type: actionTypes.SET_DATA_ALERTS,
+    data: dataAlerts
+  };
+};
+
+export const setSelectedAlert = alert => {
+  return {
+    type: actionTypes.SET_SELECTED_ALERT,
+    alert
+  };
+};

@@ -18,7 +18,7 @@ export default function Info() {
           hook. The app shows live missle alert (last 5 minuts) and history
           allerts - between dates.
         </Typography>
-        <Typography>
+        <Typography component={'span'}>
           <br />
           Written by &nbsp;
           <a
@@ -29,7 +29,7 @@ export default function Info() {
             Vadim Tanel
           </a>
         </Typography>
-        <Typography>
+        <Typography component={'span'}>
           <GitHubIcon />
           <a
             className={classes.avatarRoot}
