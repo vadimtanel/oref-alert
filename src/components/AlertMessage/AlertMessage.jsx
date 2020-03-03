@@ -25,8 +25,8 @@ export default function AlertMessage(props) {
     };
 
     return (
-        <ListItem button selected={selected} onClick={event => handleListItemClick(event, props.name)} >
-            <ListItemText primary={props.name} secondary={props.date + " " + props.time} />
+        <ListItem button selected={selected} onClick={event => handleListItemClick(event, props.location)} >
+            <ListItemText primary={props.location} secondary={props.date + " " + props.time} />
         </ListItem>
     );
 }

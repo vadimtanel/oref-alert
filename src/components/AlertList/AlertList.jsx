@@ -11,7 +11,7 @@ export default function AlertList() {
     const renderAlertList = () => {
         return data.map((x, index) => {
             return (
-                <AlertMessage key={index} name={x.location} date={x.date} time={x.time} geoPosition={x.geoPosition} keyValue={index} />
+                <AlertMessage key={index} location={x.location} date={x.date} time={x.time} geoPosition={x.geoPosition} keyValue={index} />
             );
         });
     }
