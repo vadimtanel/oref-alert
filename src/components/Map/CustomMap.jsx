@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import iconAlert from "./../../asserts/marker-icon-2x-red-alert.png";
+import iconShadow from "./../../asserts/marker-shadow.png";
 
 // fix for react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -14,6 +16,16 @@ L.Icon.Default.mergeOptions({
 });
 
 const classes = require("./style.scss");
+
+var greenIcon = new L.Icon({
+  iconUrl: iconAlert,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 
 export default function CustomMap(props) {
   const israelLat = 31.0461;
@@ -38,29 +50,32 @@ export default function CustomMap(props) {
     }
   }, [selectedAlert]);
 
+  const dataMarkers = () => {
+    return data.map((d, index) => {
+      if (d.geoPosition !== null) {
+        return (<Marker key={"dataMarker" + index} position={[d.geoPosition.latt, d.geoPosition.longt]}>
+          <Popup>{d.location + " - " + d.date + " " + d.time}</Popup>
+        </Marker>);
+      }
+      return (<React.Fragment></React.Fragment>);
+    });
+  }
+
+  const selectedMarker = () => {
+    return (
+      (Object.keys(selectedAlert).length === 0 && selectedAlert.constructor === Object && typeof (selectedAlert.geoPosition) === "undefined")
+      || selectedAlert.geoPosition === null) ?
+      <React.Fragment></React.Fragment>
+      :
+      <Marker key="selectedMarker" position={[selectedAlert.geoPosition.latt, selectedAlert.geoPosition.longt]} icon={greenIcon}>
+        <Popup>{selectedAlert.location + " - " + selectedAlert.date + " " + selectedAlert.time}</Popup>
+      </Marker>;
+  }
+
   return (
     <Map center={[lat, lng]} zoom={zoom}>
-      {
-        data.map(d => {
-          if (d.geoPosition !== null) {
-            return (
-              <Marker position={[d.geoPosition.latt, d.geoPosition.longt]}>
-                <Popup>{d.location + " - " + d.date + " " + d.time}</Popup>
-              </Marker>
-            )
-          }
-          return (<React.Fragment></React.Fragment>)
-        })
-      }
-      {
-        ((Object.keys(selectedAlert).length === 0 && selectedAlert.constructor === Object && typeof (selectedAlert.geoPosition) === "undefined") || selectedAlert.geoPosition === null) ?
-          <React.Fragment></React.Fragment>
-          :
-          <Marker position={[selectedAlert.geoPosition.latt, selectedAlert.geoPosition.longt]}>
-            <Popup>{selectedAlert.location + " - " + selectedAlert.date + " " + selectedAlert.time}</Popup>
-          </Marker>
-      }
-
+      {dataMarkers()}
+      {selectedMarker()}
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
