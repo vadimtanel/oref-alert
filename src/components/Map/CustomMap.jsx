@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import iconAlert from "./../../asserts/marker-icon-2x-red-alert.png";
 import iconShadow from "./../../asserts/marker-shadow.png";
+import { setSelectedAlert } from './../../reducers/orefActions';
 
 // fix for react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -33,6 +34,7 @@ export default function CustomMap(props) {
   const defaultZoom = 7;
 
   const data = useSelector(state => state.data);
+  const dispatch = useDispatch()
   const selectedAlert = useSelector(state => state.selectedAlert);
   const [lat, setLat] = useState(israelLat);
   const [lng, setLng] = useState(israelLng);
@@ -50,12 +52,19 @@ export default function CustomMap(props) {
     }
   }, [selectedAlert]);
 
+
+  const handleMarkerClick = (event, data) => {
+    console.log("clicked on " + data.location);
+    dispatch(setSelectedAlert(data));
+  };
+
   const dataMarkers = () => {
     return data.map((d, index) => {
       if (d.geoPosition !== null) {
-        return (<Marker key={"dataMarker" + index} position={[d.geoPosition.latt, d.geoPosition.longt]}>
-          <Popup>{d.location + " - " + d.date + " " + d.time}</Popup>
-        </Marker>);
+        return (
+          <Marker key={"dataMarker" + index} position={[d.geoPosition.latt, d.geoPosition.longt]} onClick={event => handleMarkerClick(event, d)}>
+            <Popup>{d.location + " - " + d.date + " " + d.time}</Popup>
+          </Marker>);
       }
       return (<React.Fragment></React.Fragment>);
     });
