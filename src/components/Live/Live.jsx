@@ -10,7 +10,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import AlertList from './../AlertList';
-import { setDataAlerts, setSelectedAlert } from './../../reducers/orefActions';
+import { setDataAlerts, setSelectedAlert, setBusyStatus } from './../../reducers/orefActions';
 
 export default function Live() {
   const dispatch = useDispatch()
@@ -21,8 +21,8 @@ export default function Live() {
   useEffect(() => {
     dispatch(setSelectedAlert({}));
     dispatch(setDataAlerts([]));
+    dispatch(setBusyStatus(true));
     getData("http://localhost:9090/api/live");
-    // getData("http://localhost:9090/api/history?fromDate=20.09.2018");
 
     return () => {
       dispatch(setDataAlerts([]));
@@ -33,6 +33,7 @@ export default function Live() {
     fetch(path, { headers: { 'Content-Type': 'application/json' } })
       .then((response) => {
         if (!response.ok) {
+          dispatch(setBusyStatus(false));
           throw new Error('Network response was not ok');
         }
         console.log(response);
@@ -42,9 +43,11 @@ export default function Live() {
         dispatch(setDataAlerts(jsonData));
         setData(jsonData);
         setCount(jsonData.length);
+        dispatch(setBusyStatus(false));
       })
       .catch((error) => {
         console.error('There has been a problem with your fetch operation:', error);
+        dispatch(setBusyStatus(false));
       });
   }
 

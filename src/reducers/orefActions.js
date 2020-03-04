@@ -20,3 +20,10 @@ export const setSelectedAlert = alert => {
     alert
   };
 };
+
+export const setBusyStatus = isBusy => {
+  return {
+    type: actionTypes.SET_BUSY_STATUS,
+    data: isBusy
+  };
+};

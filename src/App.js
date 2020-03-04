@@ -10,6 +10,7 @@ import SideBar from "./components/SideBar";
 import Info from "./components/Info";
 import History from "./components/History";
 import Live from "./components/Live";
+import LoadingBackdrop from "./components/LoadingBackdrop";
 
 function App() {
   const viewName = useSelector(state => state.viewName);
@@ -54,6 +55,7 @@ function App() {
       >
         <div className={classes.drawerHeader} />
         {getViewNameObject()}
+        <LoadingBackdrop />
       </main>
     </div>
   );
