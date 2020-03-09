@@ -13,11 +13,8 @@ import { setDataAlerts, setSelectedAlert, setBusyStatus } from './../../reducers
 export default function History() {
   const classes = useStyles();
   const dispatch = useDispatch()
-  const [data, setData] = useState(0);
   const [count, setCount] = useState(0);
-  const [fromDate, setFromDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
+  const [fromDate, setFromDate] = React.useState(new Date("2014-08-18T21:11:54"));
   const [toDate, setToDate] = React.useState(new Date("2014-08-18T21:11:54"));
 
   const handleFromDateChange = date => {
@@ -36,6 +33,7 @@ export default function History() {
     getData("http://localhost:9090/api/history?fromDate=01.01.2020");
 
     return () => {
+      dispatch(setSelectedAlert({}));
       dispatch(setDataAlerts([]));
     };
   }, []);
@@ -52,7 +50,6 @@ export default function History() {
       })
       .then((jsonData) => {
         dispatch(setDataAlerts(jsonData));
-        setData(jsonData);
         setCount(jsonData.length);
         dispatch(setBusyStatus(false));
       })

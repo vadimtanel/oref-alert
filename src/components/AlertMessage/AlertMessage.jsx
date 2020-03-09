@@ -8,7 +8,6 @@ export default function AlertMessage(props) {
     const dispatch = useDispatch()
     const selectedAlert = useSelector(state => state.selectedAlert);
     const [selected, setSelected] = useState(false);
-    const [alert, setAlert] = useState(props);
 
     useEffect(() => {
         if ((Object.keys(selectedAlert).length !== 0 && selectedAlert.constructor === Object) && props.keyValue === selectedAlert.keyValue) {
@@ -21,7 +20,7 @@ export default function AlertMessage(props) {
     const handleListItemClick = (event, location) => {
         console.log("clicked on " + location);
         setSelected(true);
-        dispatch(setSelectedAlert(alert));
+        dispatch(setSelectedAlert(props));
     };
 
     return (
